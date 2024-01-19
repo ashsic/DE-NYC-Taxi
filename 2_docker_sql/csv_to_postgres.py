@@ -25,8 +25,8 @@ def main(params):
     # os.system(f"gzip -d {csv_name}.gz")
 
     # ubuntu:
-    # os.system(f"wget {url} -O {csv_name}.gz")
-    # os.system(f"gzip -d {csv_name}.gz")
+    os.system(f"wget {url} -O {csv_name}.gz")
+    os.system(f"gzip -d {csv_name}.gz")
 
     print("Done wget and gunzip")
 
