@@ -1,0 +1,10 @@
+# ignore postgres data
+green_taxi_data/
+green_taxi_data/*
+
+# ignore csv files
+*.csv
+
+# ignore wget
+
+../wget.exe
