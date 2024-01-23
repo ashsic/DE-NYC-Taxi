@@ -55,7 +55,7 @@ docker run -it \
   green_taxi_ingest:v001 \
     --user=root \
     --password=root \
-    --host=0b7a0cbea7c235e345c8d7e08858cafd215a2c41fe0c66ddc1cd03e49d09b7b9 \
+    --host=pgdatabase \
     --port=5432 \
     --db=ny_taxi \
     --table_name=green_taxi_data \
