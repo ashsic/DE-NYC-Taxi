@@ -5,3 +5,12 @@ docker run -it \
   -v c:/Users/Ashton/github_Repos/DE-NYC-Taxi/3_docker_work/db:/var/lib/postgresql/data \
   -p 5432:5432 \
   postgres:13
+
+python new_pipeline.py \
+  --user root \
+  --password root \
+  --host localhost \
+  --port 5432 \
+  --db ny_taxi \
+  --table taxi \
+  --url google.com
