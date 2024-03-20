@@ -4,6 +4,8 @@ docker run -it \
   -e POSTGRES_DB="ny_taxi" \
   -v c:/Users/Ashton/github_Repos/DE-NYC-Taxi/3_docker_work/db:/var/lib/postgresql/data \
   -p 5432:5432 \
+  --network=pg-network2 \
+  --name pg-database \
   postgres:13
 
 python new_pipeline.py \
@@ -13,4 +15,31 @@ python new_pipeline.py \
   --port 5432 \
   --db ny_taxi \
   --table taxi \
-  --url google.com
+  --url https://github.com/DataTalksClub/nyc-tlc-data/releases/download/yellow/yellow_tripdata_2021-01.csv.gz
+
+docker build -t taxi_ingest:v001
+
+Run these sequentially to get containers to work together, run ingestion to postgres:
+
+docker network create pg-network2
+
+docker run -it \
+  -e POSTGRES_USER="root" \
+  -e POSTGRES_PASSWORD="root" \
+  -e POSTGRES_DB="ny_taxi" \
+  -v c:/Users/Ashton/github_Repos/DE-NYC-Taxi/3_docker_work/db:/var/lib/postgresql/data \
+  -p 5432:5432 \
+  --network=pg-network2 \
+  --name pg-database \
+  postgres:13
+
+docker run -it \
+  --network=pg-network2 \
+  taxi_ingest:v001 \
+    --user root \
+    --password root \
+    --host pg-database \
+    --port 5432 \
+    --db ny_taxi \
+    --table taxi \
+    --url https://github.com/DataTalksClub/nyc-tlc-data/releases/download/yellow/yellow_tripdata_2021-01.csv.gz

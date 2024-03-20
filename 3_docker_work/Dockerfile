@@ -1,8 +1,9 @@
 FROM python:3.9
 
-RUN pip install pandas
+RUN apt-get install wget
+RUN pip install pandas psycopg2 sqlalchemy
 
 WORKDIR /app
-COPY pipeline.py pipeline.py
+COPY new_pipeline.py new_pipeline.py
 
-ENTRYPOINT [ "python", "pipeline.py" ]
+ENTRYPOINT [ "python", "new_pipeline.py" ]

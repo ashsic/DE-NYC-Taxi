@@ -1,4 +1,4 @@
-
+import os
 import argparse
 
 import pandas as pd
@@ -13,9 +13,12 @@ def main(params):
     table_name = params.table
     db = params.db
     url = params.url
+    csv_name = 'output.csv'
 
+    os.system(f'wget {url} -O {csv_name}.gz')
+    os.system(f'gunzip {csv_name}.gz')
 
-    df = pd.read_csv('../2_docker_sql/test.csv', nrows=100)
+    df = pd.read_csv(csv_name, nrows=100)
 
     df.tpep_pickup_datetime = pd.to_datetime(df.tpep_pickup_datetime)
     df.tpep_dropoff_datetime = pd.to_datetime(df.tpep_dropoff_datetime)
@@ -25,7 +28,7 @@ def main(params):
 
     pd.io.sql.get_schema(df, name=table_name, con=engine)
 
-    df_iter = pd.read_csv('../2_docker_sql/test.csv', iterator=True, chunksize=100000)
+    df_iter = pd.read_csv(csv_name, iterator=True, chunksize=100000)
 
     df = next(df_iter)
 
